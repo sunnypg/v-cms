@@ -1,7 +1,6 @@
 <template>
-  <div class="app">
-    <h2>APP</h2>
-    <router-view></router-view>
+  <div class="notFound">
+    <h2>地址不存在</h2>
   </div>
 </template>
 
