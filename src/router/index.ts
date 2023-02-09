@@ -1,3 +1,4 @@
+import { myLocalStorage } from '@/utils/storage'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const router = createRouter({
@@ -20,6 +21,14 @@ const router = createRouter({
       component: () => import('../views/not-found/NotFound.vue')
     }
   ]
+})
+
+// 导航守卫
+router.beforeEach((to) => {
+  const token = myLocalStorage.getStorage('token')
+  if (to.path === '/main' && !token) {
+    return '/login'
+  }
 })
 
 export default router

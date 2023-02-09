@@ -1,32 +1,20 @@
 <template>
   <div class="login">
-    <h2>login</h2>
+    <login-panel />
   </div>
 </template>
 
 <script setup lang="ts">
-import myRequest from '@/service'
-// 发送网络请求
-myRequest
-  .request({
-    url: '/entire/list',
-    // 独有拦截器
-    interceptors: {
-      // 请求成功
-      requestSuccessFn: (config) => {
-        console.log('/entire/list请求成功的拦截')
-        return config
-      },
-      // 响应成功
-      responseSuccessFn: (res) => {
-        console.log('/entire/list响应成功的拦截')
-        return res
-      }
-    }
-  })
-  .then((res) => {
-    console.log(res.data)
-  })
+import loginPanel from './cpns/login-panel.vue'
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: url('../../assets/img/login-bg.svg');
+}
+</style>

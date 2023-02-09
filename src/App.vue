@@ -1,10 +1,14 @@
 <template>
   <div class="app">
-    <h2>APP</h2>
     <router-view></router-view>
   </div>
 </template>
 
 <script setup lang="ts"></script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.app {
+  width: 100vw;
+  height: 100vh;
+}
+</style>

@@ -48,7 +48,7 @@ class MyRequest {
       }
     )
 
-    // 实例请求拦截器
+    // // 实例请求拦截器
     this.instance.interceptors.request.use(
       config.interceptors?.requestSuccessFn,
       config.interceptors?.requestFailureFn
