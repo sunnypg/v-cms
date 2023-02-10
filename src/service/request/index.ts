@@ -24,12 +24,10 @@ class MyRequest {
     this.instance.interceptors.request.use(
       // 请求成功的回调
       (config) => {
-        console.log('全局请求成功的拦截')
         return config
       },
       // 请求失败的回调
       (err) => {
-        console.log('全局请求失败的拦截')
         return err
       }
     )
@@ -38,12 +36,10 @@ class MyRequest {
     this.instance.interceptors.response.use(
       // 响应成功的回调
       (res) => {
-        console.log('全局响应成功的拦截')
         return res
       },
       // 响应失败的回调
       (err) => {
-        console.log('全局响应失败的拦截')
         return err
       }
     )
