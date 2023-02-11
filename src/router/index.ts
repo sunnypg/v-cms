@@ -14,7 +14,14 @@ const router = createRouter({
     },
     {
       path: '/main',
-      component: () => import('../views/main/Main.vue')
+      name: 'main',
+      component: () => import('../views/main/Main.vue'),
+      children: [
+        {
+          path: '/main',
+          component: () => import('../views/main/home/home.vue')
+        }
+      ]
     },
     {
       path: '/:pathMatch(.*)',
@@ -26,7 +33,7 @@ const router = createRouter({
 // 导航守卫
 router.beforeEach((to) => {
   const token = myLocalStorage.getStorage('token')
-  if (to.path === '/main' && !token) {
+  if (to.path.startsWith('/main') && !token) {
     return '/login'
   }
 })

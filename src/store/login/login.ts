@@ -3,6 +3,7 @@ import { accountLogin, getUserInfoById, getUserMenuByRoleId } from '@/service/lo
 import type { IAccount } from '@/views/login/types'
 import { myLocalStorage } from '@/utils/storage'
 import router from '@/router'
+import { dynamicRoute } from '@/utils/dynamicRoute'
 
 interface ILoginState {
   token: string
@@ -13,9 +14,9 @@ interface ILoginState {
 const useLoginStore = defineStore('login', {
   // 为 state 指定类型
   state: (): ILoginState => ({
-    token: myLocalStorage.getStorage('token') ?? '',
-    userInfo: myLocalStorage.getStorage('userInfo') ?? {},
-    userMenus: myLocalStorage.getStorage('userMenus') ?? []
+    token: '',
+    userInfo: {},
+    userMenus: []
   }),
   actions: {
     // 登录
@@ -41,8 +42,26 @@ const useLoginStore = defineStore('login', {
       myLocalStorage.setStorage('userInfo', userInfo)
       myLocalStorage.setStorage('userMenus', userMenus)
 
+      // 动态添加路由
+      dynamicRoute(userMenus)
+
       // 页面跳转
       router.push('/main')
+    },
+
+    // 获取缓存数据（用户进行刷新默认加载数据）
+    LocalStorageAction() {
+      const token = myLocalStorage.getStorage('token')
+      const userInfo = myLocalStorage.getStorage('userInfo')
+      const userMenus = myLocalStorage.getStorage('userMenus')
+      if (token && userInfo && userMenus) {
+        this.token = token
+        this.userInfo = userInfo
+        this.userMenus = userMenus
+
+        // 动态添加路由
+        dynamicRoute(userMenus)
+      }
     }
   }
 })

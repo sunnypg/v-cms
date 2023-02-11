@@ -8,7 +8,7 @@
     <!-- 菜单 -->
     <div class="menu">
       <el-menu
-        default-active="3"
+        :default-active="defaultActive"
         :collapse="isFold"
         text-color="#b7bdc3"
         active-text-color="#fff"
@@ -24,7 +24,9 @@
               <span>{{ item.name }}</span>
             </template>
             <template v-for="subItem in item.children" :key="subItem.id">
-              <el-menu-item :index="subItem.id + ''">{{ subItem.name }}</el-menu-item>
+              <el-menu-item :index="subItem.id + ''" @click="handleItemClick(subItem)">{{
+                subItem.name
+              }}</el-menu-item>
             </template>
           </el-sub-menu>
         </template>
@@ -34,7 +36,11 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
+import router from '@/router'
 import useLoginStore from '@/store/login/login'
+import { useRoute } from 'vue-router'
+import { mapPathToMenu } from '@/utils/mapPathToMenu'
 
 // 定义props
 defineProps({
@@ -46,6 +52,14 @@ defineProps({
 
 const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
+
+function handleItemClick(item: any) {
+  router.push(item.url)
+}
+
+const route = useRoute()
+const pathMenu = mapPathToMenu(route.path, userMenus)
+const defaultActive = ref(pathMenu?.id + '')
 </script>
 
 <style lang="less" scoped>
