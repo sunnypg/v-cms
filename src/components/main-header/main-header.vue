@@ -6,7 +6,7 @@
       </el-icon>
     </div>
     <div class="content">
-      <div class="breadcrumb">面包屑</div>
+      <HeaderBreadcrumb />
       <HeaderInfo />
     </div>
   </div>
