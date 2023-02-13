@@ -38,3 +38,34 @@ export function editUser(id: number, userinfo: any) {
     data: userinfo
   })
 }
+
+// 获取页面数据列表
+export function getPageListData(pageName: string, queryInfo: any) {
+  return myRequest.post({
+    url: `/${pageName}/list`,
+    data: queryInfo
+  })
+}
+
+// 新增页面数据
+export function addPage(pageName: string, userInfo: any) {
+  return myRequest.post({
+    url: `/${pageName}`,
+    data: userInfo
+  })
+}
+
+// 删除页面数据
+export function deletePageById(pageName: string, id: number) {
+  return myRequest.delete({
+    url: `/${pageName}/${id}`
+  })
+}
+
+// 编辑页面数据
+export function editPage(pageName: string, id: number, userinfo: any) {
+  return myRequest.patch({
+    url: `/${pageName}/${id}`,
+    data: userinfo
+  })
+}
