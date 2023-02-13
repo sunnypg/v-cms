@@ -4,6 +4,7 @@ import type { IAccount } from '@/views/login/types'
 import { myLocalStorage } from '@/utils/storage'
 import router from '@/router'
 import { dynamicRoute } from '@/utils/dynamicRoute'
+import useMainStore from '@/store/main/main'
 
 interface ILoginState {
   token: string
@@ -42,6 +43,10 @@ const useLoginStore = defineStore('login', {
       myLocalStorage.setStorage('userInfo', userInfo)
       myLocalStorage.setStorage('userMenus', userMenus)
 
+      const mainStore = useMainStore()
+      mainStore.getAllRolesAction()
+      mainStore.getAlldepartmentsAction()
+
       // 动态添加路由
       dynamicRoute(userMenus)
 
@@ -58,6 +63,10 @@ const useLoginStore = defineStore('login', {
         this.token = token
         this.userInfo = userInfo
         this.userMenus = userMenus
+
+        const mainStore = useMainStore()
+        mainStore.getAllRolesAction()
+        mainStore.getAlldepartmentsAction()
 
         // 动态添加路由
         dynamicRoute(userMenus)

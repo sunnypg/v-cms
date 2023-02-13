@@ -2,7 +2,7 @@
   <div class="user-content">
     <div class="header">
       <h3 class="title">用户列表</h3>
-      <el-button type="primary">新建用户</el-button>
+      <el-button type="primary" @click="addUser">新建用户</el-button>
     </div>
     <div class="table">
       <el-table :data="userList" border style="width: 100%">
@@ -28,9 +28,18 @@
           </template>
         </el-table-column>
         <el-table-column align="center" label="操作" width="150px">
-          <template #default>
-            <el-button size="small" icon="Edit" type="primary" text>编辑</el-button>
-            <el-button size="small" icon="Delete" type="danger" text>删除</el-button>
+          <template #default="scope">
+            <el-button size="small" icon="Edit" type="primary" text @click="editClick(scope.row)"
+              >编辑</el-button
+            >
+            <el-button
+              size="small"
+              icon="Delete"
+              type="danger"
+              text
+              @click="deleteClick(scope.row.id)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -73,6 +82,22 @@ function handleSizeChange() {
 // 页码改变
 function handleCurrentChange() {
   getUserList()
+}
+
+const emit = defineEmits(['addUser', 'editUser'])
+// 新建用户
+function addUser() {
+  emit('addUser')
+}
+
+// 删除用户
+function deleteClick(id: number) {
+  systemStore.deleteUserAction(id)
+}
+
+// 编辑用户
+function editClick(info: any) {
+  emit('editUser', info)
 }
 
 // 请求用户列表数据的函数

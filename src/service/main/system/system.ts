@@ -15,3 +15,26 @@ export function getUserListData(queryInfo: any) {
     }
   })
 }
+
+// 新增用户
+export function addUser(userInfo: any) {
+  return myRequest.post({
+    url: `/users`,
+    data: userInfo
+  })
+}
+
+// 删除用户
+export function deleteUserById(id: number) {
+  return myRequest.delete({
+    url: `/users/${id}`
+  })
+}
+
+// 编辑用户
+export function editUser(id: number, userinfo: any) {
+  return myRequest.patch({
+    url: `/users/${id}`,
+    data: userinfo
+  })
+}
