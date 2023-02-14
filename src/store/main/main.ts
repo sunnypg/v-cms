@@ -1,15 +1,17 @@
 import { defineStore } from 'pinia'
-import { getAllRoles, getAllDepartments } from '@/service/main/main'
+import { getAllRoles, getAllDepartments, getAllPermission } from '@/service/main/main'
 
 interface IMainState {
   allRoles: any[]
   allDepartments: any[]
+  allPermissions: any[]
 }
 
 const useMainStore = defineStore('main', {
   state: (): IMainState => ({
     allRoles: [],
-    allDepartments: []
+    allDepartments: [],
+    allPermissions: []
   }),
   actions: {
     // 获取所有角色
@@ -22,6 +24,12 @@ const useMainStore = defineStore('main', {
     async getAlldepartmentsAction() {
       const departmentList = await getAllDepartments()
       this.allDepartments = departmentList.data.list
+    },
+
+    // 获取所有权限
+    async getAllPermAction() {
+      const permissionsList = await getAllPermission()
+      this.allPermissions = permissionsList.data.list
     }
   }
 })

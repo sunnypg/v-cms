@@ -1,4 +1,10 @@
-const searchConfig = {
+import type { IDialogConfig } from '@/components/page-dialog/type'
+
+const dialogConfig: IDialogConfig = {
+  pageName: 'role',
+  header: {
+    title: '角色'
+  },
   formItems: [
     {
       type: 'input',
@@ -13,12 +19,11 @@ const searchConfig = {
       placeholder: '请输入权限介绍'
     },
     {
-      type: 'date-picker',
-      prop: 'createAt',
-      label: '创建时间',
-      placeholder: '请输入创建时间'
+      type: 'custom',
+      label: '分配权限',
+      slotName: 'perm'
     }
   ]
 }
 
-export default searchConfig
+export default dialogConfig

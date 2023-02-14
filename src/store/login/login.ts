@@ -46,6 +46,7 @@ const useLoginStore = defineStore('login', {
       const mainStore = useMainStore()
       mainStore.getAllRolesAction()
       mainStore.getAlldepartmentsAction()
+      mainStore.getAllPermAction()
 
       // 动态添加路由
       dynamicRoute(userMenus)
@@ -67,6 +68,7 @@ const useLoginStore = defineStore('login', {
         const mainStore = useMainStore()
         mainStore.getAllRolesAction()
         mainStore.getAlldepartmentsAction()
+        mainStore.getAllPermAction()
 
         // 动态添加路由
         dynamicRoute(userMenus)

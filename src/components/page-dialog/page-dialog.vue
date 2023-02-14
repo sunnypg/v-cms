@@ -18,6 +18,11 @@
                 </el-select>
               </el-form-item>
             </template>
+            <template v-else-if="item.type === 'custom'">
+              <el-form-item :label="item.label">
+                <slot :name="item.slotName"></slot>
+              </el-form-item>
+            </template>
             <template v-else>
               <el-form-item v-bind="item">
                 <el-input v-model="formData[item.prop]" :placeholder="item.placeholder" />
@@ -51,6 +56,7 @@ interface IDialogProps {
     labelWidth?: string
     formItems: any[]
   }
+  otherInfo?: any
 }
 
 const props = defineProps<IDialogProps>()
@@ -70,12 +76,16 @@ const formData = reactive(initForm)
 
 // 确定按钮
 function confirmClick() {
+  let infoData = formData
+  if (props.otherInfo) {
+    infoData = { ...props.otherInfo, ...infoData }
+  }
   if (!isNew.value && editData.value) {
     // 编辑
-    systemStore.editPageAction(props.dialogConfig.pageName, editData.value.id, formData)
+    systemStore.editPageAction(props.dialogConfig.pageName, editData.value.id, infoData)
   } else {
     // 新增
-    systemStore.addPageAction(props.dialogConfig.pageName, formData)
+    systemStore.addPageAction(props.dialogConfig.pageName, infoData)
   }
   dialogVisible.value = false
 }

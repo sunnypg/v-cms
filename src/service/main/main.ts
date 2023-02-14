@@ -13,3 +13,10 @@ export function getAllDepartments() {
     url: `/department/list`
   })
 }
+
+// 获取所有权限
+export function getAllPermission() {
+  return myRequest.post({
+    url: `/menu/list`
+  })
+}

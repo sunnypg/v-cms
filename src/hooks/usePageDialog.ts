@@ -1,7 +1,9 @@
 import { ref } from 'vue'
 import type pageDialog from '@/components/page-dialog/page-dialog.vue'
 
-export default function usePageDialog() {
+type EditFnType = (data: any) => void
+
+export default function usePageDialog(editCallback?: EditFnType) {
   const dialogRef = ref<InstanceType<typeof pageDialog>>()
   // 新增弹窗
   function addPage() {
@@ -11,6 +13,7 @@ export default function usePageDialog() {
   // 编辑弹窗
   function editPage(itemData: any) {
     dialogRef.value!.setDialogVisible(false, itemData)
+    if (editCallback) editCallback(itemData)
   }
 
   return {
