@@ -1,4 +1,5 @@
 const searchConfig = {
+  pageName: 'department',
   formItems: [
     {
       type: 'input',
@@ -11,16 +12,6 @@ const searchConfig = {
       prop: 'leader',
       label: '部门主管',
       placeholder: '请输入部门主管'
-    },
-    {
-      type: 'select',
-      prop: 'enable',
-      label: '状态',
-      placeholder: '请选择状态',
-      options: [
-        { label: '启用', value: 1 },
-        { label: '禁用', value: 0 }
-      ]
     },
     {
       type: 'date-picker',

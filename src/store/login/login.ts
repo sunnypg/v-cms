@@ -5,11 +5,13 @@ import { myLocalStorage } from '@/utils/storage'
 import router from '@/router'
 import { dynamicRoute } from '@/utils/dynamicRoute'
 import useMainStore from '@/store/main/main'
+import mapMenuToPerm from '@/utils/mapMenuToPerm'
 
 interface ILoginState {
   token: string
   userInfo: any
   userMenus: any
+  permissions: any
 }
 
 const useLoginStore = defineStore('login', {
@@ -17,7 +19,8 @@ const useLoginStore = defineStore('login', {
   state: (): ILoginState => ({
     token: '',
     userInfo: {},
-    userMenus: []
+    userMenus: [],
+    permissions: []
   }),
   actions: {
     // 登录
@@ -42,6 +45,10 @@ const useLoginStore = defineStore('login', {
 
       myLocalStorage.setStorage('userInfo', userInfo)
       myLocalStorage.setStorage('userMenus', userMenus)
+
+      // 获取按钮权限
+      const permissions: string[] = mapMenuToPerm(this.userMenus)
+      this.permissions = permissions
 
       const mainStore = useMainStore()
       mainStore.getAllRolesAction()
@@ -69,6 +76,10 @@ const useLoginStore = defineStore('login', {
         mainStore.getAllRolesAction()
         mainStore.getAlldepartmentsAction()
         mainStore.getAllPermAction()
+
+        // 获取按钮权限
+        const permissions: string[] = mapMenuToPerm(this.userMenus)
+        this.permissions = permissions
 
         // 动态添加路由
         dynamicRoute(userMenus)

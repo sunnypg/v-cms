@@ -61,8 +61,16 @@ function handleCheck(data1: any, data2: any) {
 const { contentRef, searchClick, resetClick } = usePageContent()
 
 // 新增、编辑的hooks
-const { dialogRef, addPage, editPage } = usePageDialog(editCallback)
+const { dialogRef, addPage, editPage } = usePageDialog(newCallback, editCallback)
 
+// 新增的回显
+function newCallback() {
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys([])
+  })
+}
+
+// 编辑的回显
 function editCallback(itemData: any) {
   const menuIds = mapMenuListToId(itemData.menuList)
   nextTick(() => {

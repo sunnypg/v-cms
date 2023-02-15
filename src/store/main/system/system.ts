@@ -10,6 +10,7 @@ import {
   editPage
 } from '@/service/main/system/system'
 import { ElMessage } from 'element-plus'
+import useMainStore from '../main'
 
 interface ISystemState {
   userList: any[]
@@ -80,6 +81,11 @@ const useSystemStore = defineStore('system', {
       const res = await addPage(pageName, userInfo)
       // 重新获取页面数据
       this.getPageListAction(pageName, { offset: 0, size: 10 })
+      // 重新获取全局数据
+      const mainStore = useMainStore()
+      mainStore.getAllPermAction()
+      mainStore.getAllRolesAction()
+      mainStore.getAlldepartmentsAction()
       ElMessage({
         message: res.data,
         type: 'success'
@@ -91,6 +97,11 @@ const useSystemStore = defineStore('system', {
       const res = await deletePageById(pageName, id)
       // 重新获取页面数据
       this.getPageListAction(pageName, { offset: 0, size: 10 })
+      // 重新获取全局数据
+      const mainStore = useMainStore()
+      mainStore.getAllPermAction()
+      mainStore.getAllRolesAction()
+      mainStore.getAlldepartmentsAction()
       ElMessage({
         message: res.data,
         type: 'success'
@@ -102,6 +113,11 @@ const useSystemStore = defineStore('system', {
       const res = await editPage(pageName, id, userinfo)
       // 重新获取页面数据
       this.getPageListAction(pageName, { offset: 0, size: 10 })
+      // 重新获取全局数据
+      const mainStore = useMainStore()
+      mainStore.getAllPermAction()
+      mainStore.getAllRolesAction()
+      mainStore.getAlldepartmentsAction()
       ElMessage({
         message: res.data,
         type: 'success'

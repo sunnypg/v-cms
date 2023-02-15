@@ -1,5 +1,5 @@
 <template>
-  <div class="user-search">
+  <div class="user-search" v-if="isSearch">
     <!-- 搜索的表单 -->
     <el-form
       :model="searchForm"
@@ -50,19 +50,24 @@
 <script setup lang="ts">
 import type { ElForm } from 'element-plus'
 import { ref, reactive } from 'vue'
+import usePermissions from '@/hooks/usePermissions'
 
 interface Iprops {
   searchConfig: {
+    pageName: string
     labelWidth?: string
     formItems: any[]
   }
 }
 const props = defineProps<Iprops>()
 
+// 获取按钮权限
+const { isSearch } = usePermissions(props.searchConfig.pageName)
+
 // 定义form的数据
 const initForm: any = {}
 for (const item of props.searchConfig.formItems) {
-  initForm[item.prop] = item.initValue ?? ''
+  if (item.prop) initForm[item.prop] = item.initValue ?? ''
 }
 const searchForm = reactive(initForm)
 

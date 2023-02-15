@@ -70,7 +70,7 @@ const editData = ref()
 // 定义form的数据
 const initForm: any = {}
 for (const item of props.dialogConfig.formItems) {
-  initForm[item.prop] = item.initValue ?? ''
+  if (item.prop) initForm[item.prop] = item.initValue ?? ''
 }
 const formData = reactive(initForm)
 

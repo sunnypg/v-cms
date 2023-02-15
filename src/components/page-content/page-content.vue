@@ -2,7 +2,7 @@
   <div class="user-content">
     <div class="header">
       <h3 class="title">{{ contentConfig?.header?.title ?? '数据列表' }}</h3>
-      <el-button type="primary" @click="addClick">{{
+      <el-button v-if="isCreate" type="primary" @click="addClick">{{
         contentConfig?.header?.btnTitle ?? '新建数据'
       }}</el-button>
     </div>
@@ -17,9 +17,10 @@
             </el-table-column>
           </template>
           <template v-else-if="item.type === 'handler'">
-            <el-table-column align="center" v-bind="item">
+            <el-table-column v-if="isUpdate || isDelete" align="center" v-bind="item">
               <template #default="scope">
                 <el-button
+                  v-if="isUpdate"
                   size="small"
                   icon="Edit"
                   type="primary"
@@ -28,6 +29,7 @@
                   >编辑</el-button
                 >
                 <el-button
+                  v-if="isDelete"
                   size="small"
                   icon="Delete"
                   type="danger"
@@ -71,6 +73,7 @@ import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
+import usePermissions from '@/hooks/usePermissions'
 
 interface Iprops {
   contentConfig: {
@@ -87,6 +90,19 @@ interface Iprops {
 const props = defineProps<Iprops>()
 
 const systemStore = useSystemStore()
+
+// 监听 systemStore 中的 action 被执行了
+systemStore.$onAction(({ name, after }) => {
+  // after 函数在 action 调用成功后触发
+  after(() => {
+    if (name === 'addPageAction' || name === 'editPageAction' || name === 'deletePageAction') {
+      currentPage.value = 1
+    }
+  })
+})
+
+// 获取按钮权限
+const { isCreate, isDelete, isUpdate, isSearch } = usePermissions(props.contentConfig.pageName)
 
 // 分页器数据
 const currentPage = ref(1)
@@ -106,7 +122,9 @@ function handleCurrentChange() {
   getPageList()
 }
 
+// 定义事件
 const emit = defineEmits(['addClick', 'editClick'])
+
 // 新建页面数据
 function addClick() {
   emit('addClick')
@@ -124,6 +142,8 @@ function editClick(info: any) {
 
 // 请求页面数据的函数
 function getPageList(formData: any = {}) {
+  if (!isSearch) return
+
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
   const pageInfo = { size, offset }

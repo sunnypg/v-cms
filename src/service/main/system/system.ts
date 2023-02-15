@@ -48,10 +48,10 @@ export function getPageListData(pageName: string, queryInfo: any) {
 }
 
 // 新增页面数据
-export function addPage(pageName: string, userInfo: any) {
+export function addPage(pageName: string, addInfo: any) {
   return myRequest.post({
     url: `/${pageName}`,
-    data: userInfo
+    data: addInfo
   })
 }
 
@@ -63,9 +63,9 @@ export function deletePageById(pageName: string, id: number) {
 }
 
 // 编辑页面数据
-export function editPage(pageName: string, id: number, userinfo: any) {
+export function editPage(pageName: string, id: number, editInfo: any) {
   return myRequest.patch({
     url: `/${pageName}/${id}`,
-    data: userinfo
+    data: editInfo
   })
 }
