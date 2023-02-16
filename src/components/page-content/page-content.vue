@@ -54,7 +54,7 @@
         </template>
       </el-table>
     </div>
-    <div class="pagination">
+    <div class="pagination" v-if="contentConfig.pageName !== 'menu'">
       <el-pagination
         v-model:current-page="currentPage"
         v-model:page-size="pageSize"

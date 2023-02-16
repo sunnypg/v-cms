@@ -1,7 +1,7 @@
 <template>
   <div class="main-menu">
     <!-- logo -->
-    <div class="logo">
+    <div class="logo" @click="toHome">
       <img class="img" src="@/assets/img/logo.svg" alt="" />
       <h2 class="title" v-show="!isFold">电商管理系统</h2>
     </div>
@@ -53,6 +53,12 @@ defineProps({
 const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
 
+// 点击logo添转主页
+function toHome() {
+  router.push('/main')
+}
+
+// 点击菜单项
 function handleItemClick(item: any) {
   router.push(item.url)
 }
