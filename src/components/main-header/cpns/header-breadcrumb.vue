@@ -4,6 +4,9 @@
       <template v-for="item in breadcrumb" :key="item.name">
         <el-breadcrumb-item>{{ item.name }}</el-breadcrumb-item>
       </template>
+      <template v-if="route.path === '/main'">
+        <el-breadcrumb-item>首页</el-breadcrumb-item>
+      </template>
     </el-breadcrumb>
   </div>
 </template>
@@ -17,7 +20,6 @@ const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
 const route = useRoute()
 const breadcrumb = computed(() => mapPathToBreadcrumb(route.path, userMenus))
-console.log(breadcrumb)
 </script>
 
 <style lang="less" scoped></style>

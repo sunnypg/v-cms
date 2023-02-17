@@ -19,6 +19,7 @@ interface IProps {
 const props = defineProps<IProps>()
 
 const echartRef = ref<HTMLElement>()
+
 onMounted(() => {
   // 初始化 echarts 实例
   const echartInstance = echarts.init(echartRef.value!, 'light', { renderer: 'canvas' })
@@ -30,14 +31,14 @@ onMounted(() => {
   })
 
   // 宽度自适应
-  window.addEventListener('resize', () => echartInstance.resize())
+  window.onresize = () => {
+    echartInstance.resize()
+  }
 })
 
 // 销毁事件
 onBeforeUnmount(() => {
-  // 初始化 echarts 实例
-  const echartInstance = echarts.init(echartRef.value!, 'light', { renderer: 'canvas' })
-  window.removeEventListener('resize', () => echartInstance.resize)
+  window.onresize = null
 })
 </script>
 
