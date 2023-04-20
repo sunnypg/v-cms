@@ -7,3 +7,5 @@ declare module '*.vue' {
 }
 
 declare module '*.mjs'
+
+declare module 'mockjs'
